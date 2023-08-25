@@ -17,10 +17,10 @@ const userConnection = async (req, res) => {
 
 const triggerAlarm = async (req, res) => {
     const {id} = req.params
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    /*if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error: 'No such rasp'})
-    }
+    }*/
+    console.log(id)
 
     const raspConnections = await RaspConnection.find({rasp_id: id})
 

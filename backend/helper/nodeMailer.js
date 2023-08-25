@@ -1,13 +1,15 @@
 const nodeMailer = require("nodemailer")
 
 const config = {
-    service: "dalcloud",
-    host: "mail.dalcloud.net",
-    port: "587",
-    secure: "STARTTLS",
+    host: process.env.CONFIG_NODEMAILER_HOST,
+    port: parseInt(process.env.CONFIG_NODEMAILER_PORT),
+    secure: false,
+    /*tls: {
+        ciphers: "SSLv3"
+    },*/
     auth: {
-        user: "noreply@qrcheck.dev",
-        pass: "_,41,sIoGyMNOlOuStOoDrANicaRCeepERyOw"
+        user: process.env.CONFIG_NODEMAILER_AUTH_USER,
+        pass: process.env.CONFIG_NODEMAILER_AUTH_PASS
     }
 }
 
