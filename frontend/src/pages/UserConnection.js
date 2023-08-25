@@ -23,28 +23,29 @@ const UserConnection = () => {
         if (mail === '' && phoneNumber === ''){
             setError('At least one field must be filled')
         }
+        else {
+            const data = {mail, phone: phoneNumber, rasp_id}
 
-        const data = {mail, phone: phoneNumber, rasp_id}
+            const response = await fetch('/api/rasp/userconnection', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            const json = await response.json()
 
-        const response = await fetch('/api/rasp/userconnection', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
+            if (!response.ok) {
+                setError(json.error)
             }
-        })
-        const json = await response.json()
-
-        if (!response.ok) {
-            setError(json.error)
-        }
-        if (response.ok) {
-            setMail('')
-            setPhoneNumber('')
-            setRasp_id('')
-            setOK('Saved Successfully')
-            setError(null)
-            console.log('new Raspi added', json)
+            if (response.ok) {
+                setMail('')
+                setPhoneNumber('')
+                setRasp_id('')
+                setOK('Saved Successfully')
+                setError(null)
+                console.log('new Raspi added', json)
+            }
         }
     }
 
