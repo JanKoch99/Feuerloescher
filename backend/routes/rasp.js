@@ -10,4 +10,5 @@ router.post('/userconnection', userConnection)
 
 router.get('/alarm/:id', triggerAlarm)
 
+
 module.exports = router

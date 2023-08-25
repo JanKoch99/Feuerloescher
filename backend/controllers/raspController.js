@@ -1,6 +1,7 @@
 const RaspConnection = require('../models/raspConnectionModel')
 const mongoose = require("mongoose");
 const {send, data} = require("../helper/nodeMailer");
+const axios = require("axios");
 
 const userConnection = async (req, res) => {
     const {mail, phone, rasp_id} = req.body
@@ -40,7 +41,7 @@ const sendMailsAndPhone = async (raspConnections) => {
             send({from: data.from, to: 'Z4l3s5i0@hotmail.com', subject: data.subject, text: data.text })
         }
         if (raspConnection.phone) {
-            sendPhone(raspConnection)
+            sendPhone(raspConnection.phone)
         }
     })
 }
@@ -49,7 +50,20 @@ const sendMail = async (raspConnection) => {
 
 }
 
-const sendPhone = async (raspConnection) => {
+const sendPhone = async (phone) => {
+    const smsKey = `${process.env.SMS_KEY}`
+    const text = "TestibusTotalus"
+    const debug = 1
+    const from = "Feuerloescher"
+    const details = 1
+    const url = `https://gateway.sms77.io/api/sms?p=${smsKey}&to=${phone}&text=${text}&debug=${debug}&from=${from}&details=${details}`
+    try {
+        const response = await axios.get(url)
+        console.log(response.data)
+    } catch (error) {
+        console.log(error)
+    }
+
 
 }
 
