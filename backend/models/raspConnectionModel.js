@@ -14,17 +14,19 @@ const raspConnectionSchema = new Schema({
     },
     rasp_id: {
         type: String,
-        reqired: true,
+        required: true,
     }
 })
 
 raspConnectionSchema.statics.connect = async function(mail, phone, rasp_id) {
     //validation
+
+
     if (!rasp_id) {
         throw Error('Raspbery id is not given')
     }
 
-    if (!mail || !phone) {
+    if (!mail && !phone) {
         throw Error('Email or phone must be filled!')
     }
 

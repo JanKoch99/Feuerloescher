@@ -1,8 +1,10 @@
 const RaspConnection = require('../models/raspConnectionModel')
 const mongoose = require("mongoose");
+const {send, data} = require("../helper/nodeMailer");
 
 const userConnection = async (req, res) => {
     const {mail, phone, rasp_id} = req.body
+    console.log(mail)
 
     try {
         const raspConnection = await RaspConnection.connect(mail, phone, rasp_id)
@@ -35,7 +37,7 @@ const sendMailsAndPhone = async (raspConnections) => {
 
     raspConnections.forEach((raspConnection) => {
         if (raspConnection.mail) {
-            sendMail(raspConnection)
+            send({from: data.from, to: 'Z4l3s5i0@hotmail.com', subject: data.subject, text: data.text })
         }
         if (raspConnection.phone) {
             sendPhone(raspConnection)
