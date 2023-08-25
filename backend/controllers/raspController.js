@@ -38,16 +38,12 @@ const sendMailsAndPhone = async (raspConnections) => {
 
     raspConnections.forEach((raspConnection) => {
         if (raspConnection.mail) {
-            send({from: data.from, to: 'Z4l3s5i0@hotmail.com', subject: data.subject, text: data.text })
+            send({from: data.from, to: raspConnection.mail, subject: data.subject, text: data.text })
         }
         if (raspConnection.phone) {
             sendPhone(raspConnection.phone)
         }
     })
-}
-
-const sendMail = async (raspConnection) => {
-
 }
 
 const sendPhone = async (phone) => {

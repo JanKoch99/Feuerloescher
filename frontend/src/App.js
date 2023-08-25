@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UserConnection from "./pages/UserConnection";
+import NotifyFireDep from "./pages/NotifyFireDep";
 
 function App() {
     const {user} = useAuthContext()
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
             <Route path="/userConnection" element={<UserConnection />}/>
+            <Route path="/notifyFireDepartment" element={<NotifyFireDep />}/>
             <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
             <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
           </Routes>
