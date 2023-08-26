@@ -1,9 +1,9 @@
 $theme-colors: (
         "primary": #FCFCFC,
-        "secondary": #A61711,
+        "secondary": #EE000B,
         "danger":#FF8F18,
-        "dark": black,
-        "success": green
+        "dark": #282625,
+        "success": #79B473
 );
 
 $lg:992px;
@@ -18,5 +18,13 @@ $lg:992px;
   @media screen and (min-width: $lg) {
     width: 50%;
   }
+}
+
+.card {
+  border-radius: 0px !important;
+}
+
+.fs-7 {
+  font-size: 0.7rem !important;
 }
 @import "node_modules/bootstrap/scss/bootstrap";

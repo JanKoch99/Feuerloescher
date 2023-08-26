@@ -5,6 +5,7 @@ const {connection} = require("mongoose");
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
+const deviceRoutes = require('./routes/device')
 const cors = require('cors')
 
 const WebSocket = require('ws')
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 app.use('/api/workouts',workoutRoutes)
 app.use('/api/user',userRoutes)
 app.use('/api/rasp', userConnectionRoutes)
+app.use('/api/device', deviceRoutes)
 
 
 mongoose.connect(process.env.MONG_URI)

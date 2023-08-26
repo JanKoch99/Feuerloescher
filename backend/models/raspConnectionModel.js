@@ -6,11 +6,11 @@ const Schema = mongoose.Schema
 const raspConnectionSchema = new Schema({
     mail: {
         type: String,
-        unique: true
+        unique: false
     },
     phone: {
         type: String,
-        unique: true
+        unique: false
     },
     rasp_id: {
         type: String,
@@ -30,25 +30,25 @@ raspConnectionSchema.statics.connect = async function(mail, phone, rasp_id) {
         throw Error('Scannen Sie noch einmal den QR-Code oder klicken Sie noch einmal auf den Link.')
     }
 
-    if (!mail && !phone) {
+    if (!mail.length > 0 && !phone.length > 0) {
         throw Error('Email or phone must be filled!')
     }
 
-    if (mail && !validator.isEmail(mail)) {
+    if (mail.length > 0 && !validator.isEmail(mail)) {
         throw Error('Email is not valid')
     }
 
     let existMail
     let existPhone
 
-    if (mail) {
+    if (mail.length > 0) {
         existMail = await this.findOne({mail: mail})
     }
-    if (phone) {
-        existPhone = await this.findOne({mail: mail})
+    if (phone.length > 0) {
+        existPhone = await this.findOne({phone: phone})
     }
 
-    if (existMail || existPhone) {
+    if ((existMail && existMail.rasp_id === rasp_id) || (existPhone && existPhone.rasp_id === rasp_id)) {
         throw Error('Email or Phone is already in use')
     }
 
