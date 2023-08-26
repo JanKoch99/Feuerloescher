@@ -13,7 +13,32 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    phone: {
+        type: String,
+        required: false
+    },
+    postCode: {
+        type: String,
+        required: false
+    },
+    city: {
+        type: String,
+        required: false
+    },
+    adresse: {
+        type: String,
+        required: true
+    },
+    insurancyPolicy: {
+        type: String,
+        required: true
+    },
+    customerNumber: {
+        type: String,
+        required: false
     }
+
 })
 
 // static signup method

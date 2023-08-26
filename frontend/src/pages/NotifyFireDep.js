@@ -17,7 +17,7 @@ const NotifyFireDep = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center">
-            <Card className="w-50 mt-5 shadow-lg">
+            <Card className="responsive-size m-3 shadow-lg bg-primary">
                 <Card.Body>
                     <div className="containery">
                         <div className="row">
