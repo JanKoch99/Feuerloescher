@@ -15,7 +15,7 @@ const config = {
 
 const send = (data) => {
     const transporter = nodeMailer.createTransport(config)
-    transporter.sendMail(data(link), (err, info) => {
+    transporter.sendMail(data, (err, info) => {
         if (err){
             console.log(err)
         } else {
