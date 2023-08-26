@@ -9,6 +9,7 @@ const UserConnection = () => {
     const [rasp_id, setRasp_id] = useState('')
     const [ok, setOK] = useState(null)
     const [error, setError] = useState(null)
+    const [daten, setDaten] = useState(null)
     const URL = config.url
     useEffect(() =>{
         getParams()
@@ -44,7 +45,8 @@ const UserConnection = () => {
                 setMail('')
                 setPhoneNumber('')
                 setRasp_id('')
-                setOK('Saved Successfully')
+                setOK(`Erfolgreich angemeldet:`)
+                setDaten(data)
                 setError(null)
                 console.log('new Raspi added', json)
             }
@@ -92,12 +94,12 @@ const UserConnection = () => {
                                         {ok &&
                                             <Alert key='success' variant='success' className="mx-3">
                                                 <p className="mb-0">
-                                                    {ok}
+                                                    {ok}<br/>{daten?.mail?.length > 0 ? 'Mail: ' + daten?.mail:'' }<br/>{daten?.phone?.length > 0 ? 'Handy: ' + daten?.phone:'' }
                                                 </p>
                                             </Alert>}
                                         <div className="d-flex flex-column my-5 mx-3">
                                             <Button variant="primary" type="submit" className="btn btn-secondary w-100 fs-5 py-3">
-                                                Speichern*
+                                                Anmelden*
                                             </Button>
                                             <span className="fs-7 text-center">
                                                 *Löschung deiner Daten nach dem Hackathon

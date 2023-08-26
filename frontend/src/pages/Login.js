@@ -33,7 +33,7 @@ const Login = () => {
 
                                 <Form.Group className="my-3 mx-3" controlId="formBasicEmail">
                                     <FloatingLabel label="Password" controlId="password" className="mb-3">
-                                        <Form.Control value={password} type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                                        <Form.Control value={password} type="password" onChange={(e) => {setPassword(e.target.value)}}/>
                                     </FloatingLabel>
                                 </Form.Group>
 
