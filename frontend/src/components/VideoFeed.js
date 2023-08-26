@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import io from 'socket.io-client';
+import {config} from "../Constants";
 
 const VideoFeed = () => {
     const socketRef = useRef();
+    const URL = config.wsurl
 
     useEffect(() => {
-        socketRef.current = new WebSocket('ws://localhost:4100');
+        socketRef.current = new WebSocket(URL);
 
         socketRef.current.onmessage = async (event) => {
             const imgElement = document.getElementById('videoFrame');
