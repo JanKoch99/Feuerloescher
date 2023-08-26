@@ -19,6 +19,10 @@ const raspConnectionSchema = new Schema({
     deactivated: {
         type: Boolean,
         default: false
+    },
+    debug:{
+        type: Boolean,
+        default: false
     }
 })
 
