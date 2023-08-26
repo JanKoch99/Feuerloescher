@@ -1,5 +1,5 @@
 const nodeMailer = require("nodemailer")
-let link;
+let link = process.env.LINK_BILD;
 const config = {
     host: process.env.CONFIG_NODEMAILER_HOST,
     port: parseInt(process.env.CONFIG_NODEMAILER_PORT),
@@ -16,6 +16,7 @@ const config = {
 
 const send = (data, isVideo) => {
     link = (isVideo=== true) ? process.env.LINK_VIDEO : process.env.LINK_BILD
+    console.log(link, link)
     const transporter = nodeMailer.createTransport(config)
     transporter.sendMail(data(link), (err, info) => {
         if (err){
