@@ -2,8 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const {connection} = require("mongoose");
-const cors = require('cors'); // Import the cors package
-
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
@@ -18,7 +16,6 @@ app.use(cors({
 
 // middleware
 app.use(express.json())
-app.use(cors()); // Use the cors middleware
 
 
 const WS_PORT = process.env.PORT2;
