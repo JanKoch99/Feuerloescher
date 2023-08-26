@@ -35,7 +35,6 @@ const triggerAlarm = async (req, res) => {
 const sendMailsAndPhone = async (raspConnections) => {
 
     for (let i=0; i <raspConnections.length; i++){
-        console.log(raspConnections[i].rasp_id)
         let link;
 
         if (raspConnections[i].deactivated) {
@@ -48,10 +47,11 @@ const sendMailsAndPhone = async (raspConnections) => {
         }
         let text1 = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
 
-        if (raspConnections[i].mail) {
+        if (raspConnections[i].mail.length > 0) {
             send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: text1})
         }
-        if (raspConnections[i].phone) {
+        if (raspConnections[i].phone.length > 0) {
+            console.log("PHONE")
             await sendPhone(raspConnections[i].phone, text1)
         }
 
