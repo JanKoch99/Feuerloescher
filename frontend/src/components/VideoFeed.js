@@ -8,7 +8,7 @@ const VideoFeed = () => {
     useEffect(() => {
         const queryParameters = new URLSearchParams(window.location.search)
         const debug=  queryParameters.get("debug")
-        socketRef.current = new WebSocket(URL + "?debug=" + debug);
+        socketRef.current = new WebSocket(URL + "&debug=" + debug);
 
         socketRef.current.onmessage = async (event) => {
             const imgElement = document.getElementById('videoFrame');
