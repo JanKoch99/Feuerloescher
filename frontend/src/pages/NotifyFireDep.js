@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
+import VideoFeed from "../components/VideoFeed";
 
 const NotifyFireDep = () => {
     const [rasp_id, setRasp_id] = useState('')
@@ -14,7 +15,7 @@ const NotifyFireDep = () => {
         <>
             <p>Du bist erfolgreich dem Link gefolgt</p>
             <p>Bestätige durch den Video-feed ob es sich tatsächlich um ein Feuer handelt.</p>
-            <p>VideoFeed</p>
+            <VideoFeed/>
             <p><a href="tel:">Feuerwehr anrufen</a></p>
         </>
     )
