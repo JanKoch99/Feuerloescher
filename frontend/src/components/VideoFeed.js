@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {config} from "../Constants";
 
 const VideoFeed = () => {
@@ -8,7 +8,6 @@ const VideoFeed = () => {
     useEffect(() => {
         const queryParameters = new URLSearchParams(window.location.search)
         const debug=  queryParameters.get("debug")
-        console.log(URL + "?debug=" + debug)
         socketRef.current = new WebSocket(URL + "?debug=" + debug);
 
         socketRef.current.onmessage = async (event) => {
@@ -19,7 +18,7 @@ const VideoFeed = () => {
         return () => {
             socketRef.current.close();
         };
-    }, []);
+    });
 
     const setDefaultImage = () => {
         const defaultImage = document.getElementById('videoFrame');

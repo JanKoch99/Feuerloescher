@@ -48,7 +48,6 @@ const UserConnection = () => {
                 setOK(`Erfolgreich angemeldet:`)
                 setDaten(data)
                 setError(null)
-                console.log('new Raspi added', json)
             }
         }
         getParams()
@@ -62,7 +61,7 @@ const UserConnection = () => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-12 d-flex just">
-                                    <img src={logo} className="logo mt-3 mx-3"/>
+                                    <img src={logo} className="logo mt-3 mx-3" alt="logo"/>
                                 </div>
                                 <div className="col-12">
                                     <h1 className="mt-3 mx-3 fw-bold"><span className="text-secondary">Feuer</span><span className="text-danger">löscher</span></h1>

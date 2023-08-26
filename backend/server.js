@@ -1,17 +1,13 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
-const {connection} = require("mongoose");
-const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
 const deviceRoutes = require('./routes/device')
 const cors = require('cors')
 const http = require('http');
-const RaspConnection = require('./models/raspConnectionModel')
 
 const WebSocket = require('ws')
-const url = require("url");
 const app = express()
 const server = http.createServer(app);
 
@@ -30,7 +26,6 @@ wsServer.on('connection', (ws, req) => {
     console.log('A new Websocket connection has been established.')
     const query = new URL(req.url, process.env.CORS_URI_FRONT).searchParams;
     const debug = query.get('debug'); // Access the value of the debug parameter
-    console.log('url',debug)
     ws.on('message', (frameData) => {
         // Broadcast the received frame to all connected clients
         wsServer.clients.forEach(async (client) => {
@@ -51,7 +46,6 @@ app.use((req, res, next) => {
 })
 
 // Serve the React frontend static files
-app.use('/api/workouts',workoutRoutes)
 app.use('/api/user',userRoutes)
 app.use('/api/rasp', userConnectionRoutes)
 app.use('/api/device', deviceRoutes)
