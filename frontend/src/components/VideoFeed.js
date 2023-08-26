@@ -5,7 +5,7 @@ const VideoFeed = () => {
     const socketRef = useRef();
 
     useEffect(() => {
-        socketRef.current = io.connect('http://localhost:4000');
+        socketRef.current = io.connect('ws://localhost:4000/ws');
 
         socketRef.current.on('videoFrame', (frameData) => {
             const imgElement = document.getElementById('videoFrame');

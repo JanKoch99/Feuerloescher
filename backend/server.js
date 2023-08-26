@@ -20,8 +20,9 @@ app.use(express.json())
 app.use(cors()); // Use the cors middleware
 
 
-let io = socketIO(server);
-
+const io = socketIO(server, {
+    path: '/ws', // WebSocket path
+});
 //videoStream
 io.on('connection', (socket) => {
     console.log('A new Websocket connection has been established.')
