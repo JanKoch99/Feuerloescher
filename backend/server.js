@@ -23,16 +23,16 @@ const WS_PORT = process.env.PORT2;
 const HTTP_PORT = process.env.PORT;
 
 //videoStream
-const wsServer = new WebSocket.Server({ port: WS_PORT }, () => console.log(`WS server is listening at ws://localhost:${WS_PORT}`));
-wsServer.on('connection', (ws, req) => {
-    console.log('A new Websocket connection has been established.')
-
-    ws.on('message', (frameData) => {
-        console.log(ws)
-        // Broadcast the received frame to all connected clients
-        wsServer.clients.forEach(client => client.send(frameData))
-    })
-})
+//const wsServer = new WebSocket.Server({ port: WS_PORT }, () => console.log(`WS server is listening at ws://localhost:${WS_PORT}`));
+// wsServer.on('connection', (ws, req) => {
+//     console.log('A new Websocket connection has been established.')
+//
+//     ws.on('message', (frameData) => {
+//         console.log(ws)
+//         // Broadcast the received frame to all connected clients
+//         wsServer.clients.forEach(client => client.send(frameData))
+//     })
+// })
 
 app.use((req, res, next) => {
     console.log(req.path, req.method)

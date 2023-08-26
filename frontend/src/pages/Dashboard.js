@@ -50,7 +50,9 @@ const Dashboard = () => {
             </div>
             <div className="smokeDetectors">
                 {smokeDetectors && smokeDetectors.map((smokeDetector) => (
-                    Test
+                    <div>
+                        Test
+                    </div>
                 ))}
             </div>
         </div>

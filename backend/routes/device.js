@@ -8,6 +8,6 @@ router.get('/devicesForUser/:id', getDevicesForUser)
 
 router.delete('/delete/:id', deleteDevice)
 
-router.put('/', createDevice)
+router.post('/create', createDevice)
 
 module.exports = router

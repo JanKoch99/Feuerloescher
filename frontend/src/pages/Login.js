@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useLogin} from "../hooks/useLogin";
+import {Alert, Button, Card, FloatingLabel, Form} from "react-bootstrap";
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -13,23 +14,47 @@ const Login = () => {
     }
 
     return (
-        <form className="login" onSubmit={handleSubmit}>
-            <h3>Log in</h3>
+        <div className="d-flex justify-content-center align-items-center">
+            <Card className="responsive-size m-3 shadow-lg bg-primary">
+                <Card.Body>
+                    <div className="login">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <h3 className="fw-bold text-center">Log in</h3>
+                                </div>
+                            </div>
+                            <Form className="login" onSubmit={handleSubmit}>
+                                <Form.Group className="my-3 mx-3" controlId="formBasicEmail">
+                                    <FloatingLabel label="E-Mail" controlId="mail" className="mb-3">
+                                        <Form.Control value={email} type="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                                    </FloatingLabel>
+                                </Form.Group>
 
-            <label>Email:</label>
-            <input type="email"
-                   onChange={(e) => setEmail(e.target.value)}
-                   value={email}
-            />
-            <label>Password:</label>
-            <input type="password"
-                   onChange={(e) => setPassword(e.target.value)}
-                   value={password}
-            />
+                                <Form.Group className="my-3 mx-3" controlId="formBasicEmail">
+                                    <FloatingLabel label="Password" controlId="password" className="mb-3">
+                                        <Form.Control value={password} type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                                    </FloatingLabel>
+                                </Form.Group>
 
-            <button disabled={isLoading}>Login</button>
-            {error && <div className="error">{error}</div> }
-        </form>
+                                {error &&
+                                    <Alert key='danger' variant='danger' className="mx-3">
+                                        <p className="mb-0">
+                                            {error}
+                                        </p>
+                                    </Alert>}
+                                <div className="d-flex flex-column my-5 mx-3">
+                                    <Button variant="primary" disabled={isLoading} type="submit" className="btn btn-secondary w-100 fs-5 py-3">
+                                        Login
+                                    </Button>
+                                </div>
+                            </Form>
+                        </div>
+                    </div>
+                </Card.Body>
+            </Card>
+        </div>
+
     )
 }
 

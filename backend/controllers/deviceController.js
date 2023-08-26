@@ -31,8 +31,12 @@ const deleteDevice = async (req, res) => {
 const createDevice = async (req, res) => {
     const {name, rasp_id, user_id} = req.body
 
+    console.log(name)
+    console.log(rasp_id)
+    console.log(user_id)
     try {
-        const device = await Device.create({name, rasp_id, user})
+        const device = await Device.create({name, rasp_id, user_id})
+        console.log(device)
 
         res.status(200).json(device)
     } catch (error) {
