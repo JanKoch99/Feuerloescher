@@ -50,9 +50,17 @@ const sendMailsAndPhone = async (raspConnections) => {
 
 const disableRaspConnection = async (raspConnection) => {
 
-    const raspConnectionUpdated = await RaspConnection.findOneAndUpdate({$or: [{mail: raspConnection.mail}, {phone: raspConnection.phone}]}, {
-        deactivated: true
-    })
+    let raspConnectionUpdated = null
+
+    if (raspConnection.mail.length > 0) {
+        raspConnectionUpdated = await RaspConnection.findOneAndUpdate({mail: raspConnection.mail}, {
+            ...{deactivated: true}
+        })
+    } else if (raspConnection.phone.length > 0) {
+        raspConnectionUpdated = await RaspConnection.findOneAndUpdate({phone: raspConnection.phone}, {
+            ...{deactivated: true}
+        })
+    }
 
     if (!raspConnectionUpdated) {
         throw Error('RaspConnection could not be updated')
