@@ -15,8 +15,14 @@ const config = {
 
 
 const send = (data, isVideo) => {
-    link = (isVideo=== true) ? process.env.LINK_VIDEO : process.env.LINK_BILD
-    console.log(link, link)
+    if(isVideo) {
+        link = process.env.LINK_VIDEO
+    }
+
+    if (!isVideo) {
+        link= process.env.LINK_BILD
+    }
+    console.log('link', link)
     const transporter = nodeMailer.createTransport(config)
     transporter.sendMail(data(link), (err, info) => {
         if (err){
