@@ -21,6 +21,13 @@ const VideoFeed = () => {
         };
     }, []);
 
+    const setDefaultImage = () => {
+        const defaultImage = document.getElementById('videoFrame');
+        defaultImage.src = 'defaultimage.png'
+    }
+
+    setDefaultImage()
+
     return (
         <img className="w-100" id="videoFrame" alt="Video Feed" />
     );

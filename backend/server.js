@@ -38,7 +38,8 @@ wsServer.on('connection', (ws, req) => {
                 client.send(frameData)
             }
             else{
-                client.send(image)
+                //image
+                client.send(null)
             }
         })
     })
