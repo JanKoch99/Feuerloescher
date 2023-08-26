@@ -44,9 +44,7 @@ const sendMailsAndPhone = async (raspConnections) => {
             sendPhone(raspConnections[i].phone)
         }
         disableRaspConnection(raspConnections[i])
-        console.log("start", new Date().getSeconds(), new Date().getMilliseconds())
         await new Promise(r => setTimeout(r, 300));
-        console.log("end", new Date().getSeconds(), new Date().getMilliseconds())
     }
 }
 
@@ -65,7 +63,7 @@ const disableRaspConnection = async (raspConnection) => {
 
 const sendPhone = async (phone) => {
     const smsKey = `${process.env.SMS_KEY}`
-    const text = "TestibusTotalus"
+    const text = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + process.env.CORS_URI_FRONT + "\nPanische Grüsse\nDie FeuerLöscher"
     const debug = 1
     const from = "Feuerloescher"
     const details = 1

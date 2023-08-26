@@ -24,11 +24,10 @@ const send = (data) => {
         }
     })
 }
-
 const data ={
-        "from": "noreply@qrcheck.app",
-        "subject": "Rauch erkannt, dein Rauchmelder ist aktiv!",
-        "text": "Lieber Benutzer \nIn einem deiner Zimmer wurde Rauch erkannt.\nWeitere Infos drücken sie Hier."
+    from: "noreply@qrcheck.app",
+    subject: "Rauch erkannt, dein Rauchmelder ist aktiv!",
+    text: "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + process.env.CORS_URI_FRONT + "\nPanische Grüsse\nDie FeuerLöscher",
 }
 
 module.exports = {data, send}
