@@ -1,5 +1,5 @@
 const nodeMailer = require("nodemailer")
-
+let link;
 const config = {
     host: process.env.CONFIG_NODEMAILER_HOST,
     port: parseInt(process.env.CONFIG_NODEMAILER_PORT),
@@ -14,7 +14,8 @@ const config = {
 }
 
 
-const send = (data, link) => {
+const send = (data, isVideo) => {
+    link = (isVideo=== true) ? process.env.LINK_VIDEO : process.env.LINK_BILD
     const transporter = nodeMailer.createTransport(config)
     transporter.sendMail(data(link), (err, info) => {
         if (err){
@@ -24,7 +25,7 @@ const send = (data, link) => {
         }
     })
 }
-const data= (link) ={
+const data ={
     from: "noreply@qrcheck.app",
     subject: "Rauch erkannt, dein Rauchmelder ist aktiv!",
     text: "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher",

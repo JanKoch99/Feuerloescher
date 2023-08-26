@@ -39,18 +39,18 @@ const sendMailsAndPhone = async (raspConnections) => {
         }
         if(raspConnections[i].debug === true) {
             if (raspConnections[i].mail) {
-                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, process.env.LINK_VIDEO)
+                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, true)
             }
             if (raspConnections[i].phone) {
-                sendPhone(raspConnections[i].phone,process.env.LINK_VIDEO)
+                await sendPhone(raspConnections[i].phone,process.env.LINK_VIDEO)
             }
         }
         if (raspConnections[i].debug === false){
             if (raspConnections[i].mail) {
-                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, process.env.LINK_BILD)
+                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, false)
             }
             if (raspConnections[i].phone) {
-                sendPhone(raspConnections[i].phone,process.env.LINK_BILD)
+                await sendPhone(raspConnections[i].phone,process.env.LINK_BILD)
             }
         }
         disableRaspConnection(raspConnections[i])
