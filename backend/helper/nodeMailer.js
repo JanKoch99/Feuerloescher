@@ -14,9 +14,9 @@ const config = {
 }
 
 
-const send = (data) => {
+const send = (data, link) => {
     const transporter = nodeMailer.createTransport(config)
-    transporter.sendMail(data, (err, info) => {
+    transporter.sendMail(data(link), (err, info) => {
         if (err){
             console.log(err)
         } else {
@@ -24,10 +24,10 @@ const send = (data) => {
         }
     })
 }
-const data ={
+const data= (link) ={
     from: "noreply@qrcheck.app",
     subject: "Rauch erkannt, dein Rauchmelder ist aktiv!",
-    text: "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + process.env.CORS_URI_FRONT + "\nPanische Grüsse\nDie FeuerLöscher",
+    text: "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher",
 }
 
 module.exports = {data, send}

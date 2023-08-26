@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {config} from "../Constants";
 
 const VideoFeed = () => {
@@ -6,7 +6,10 @@ const VideoFeed = () => {
     const URL = config.wsurl
 
     useEffect(() => {
-        socketRef.current = new WebSocket(URL);
+        const queryParameters = new URLSearchParams(window.location.search)
+        const debug=  queryParameters.get("debug")
+        console.log(URL + "?debug=" + debug)
+        socketRef.current = new WebSocket(URL + "?debug=" + debug);
 
         socketRef.current.onmessage = async (event) => {
             const imgElement = document.getElementById('videoFrame');

@@ -37,11 +37,21 @@ const sendMailsAndPhone = async (raspConnections) => {
         if (raspConnections[i].deactivated) {
             return
         }
-        if (raspConnections[i].mail) {
-            send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text })
+        if(raspConnections[i].debug === true) {
+            if (raspConnections[i].mail) {
+                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, process.env.LINK_VIDEO)
+            }
+            if (raspConnections[i].phone) {
+                sendPhone(raspConnections[i].phone,process.env.LINK_VIDEO)
+            }
         }
-        if (raspConnections[i].phone) {
-            sendPhone(raspConnections[i].phone)
+        if (raspConnections[i].debug === false){
+            if (raspConnections[i].mail) {
+                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, process.env.LINK_BILD)
+            }
+            if (raspConnections[i].phone) {
+                sendPhone(raspConnections[i].phone,process.env.LINK_BILD)
+            }
         }
         disableRaspConnection(raspConnections[i])
         await new Promise(r => setTimeout(r, 300));
@@ -69,9 +79,9 @@ const disableRaspConnection = async (raspConnection) => {
     return raspConnectionUpdated
 }
 
-const sendPhone = async (phone) => {
+const sendPhone = async (phone, link) => {
     const smsKey = `${process.env.SMS_KEY}`
-    const text = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + process.env.CORS_URI_FRONT + "\nPanische Grüsse\nDie FeuerLöscher"
+    const text = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
     const debug = 1
     const from = "Feuerloescher"
     const details = 1
