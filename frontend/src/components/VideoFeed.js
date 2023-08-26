@@ -19,9 +19,7 @@ const VideoFeed = () => {
     }, []);
 
     return (
-        <div>
-            <img id="videoFrame" alt="Video Feed" />
-        </div>
+        <img className="w-100" id="videoFrame" alt="Video Feed" />
     );
 };
 
