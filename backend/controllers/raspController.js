@@ -32,16 +32,17 @@ const triggerAlarm = async (req, res) => {
     res.status(200).json({success: 'alarm triggered'})
 }
 const sendMailsAndPhone = async (raspConnections) => {
-    let link;
 
     for (let i=0; i <raspConnections.length; i++){
+        console.log(raspConnections[i].rasp_id)
+        let link;
+
         if (raspConnections[i].deactivated) {
             return
         }
         if (raspConnections[i].debug){
             link=process.env.LINK_VIDEO
-        }
-        if (!raspConnections[i].debug){
+        } else {
             link=process.env.LINK_BILD
         }
         let text1 = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
@@ -82,7 +83,7 @@ const disableRaspConnection = async (raspConnection) => {
 const sendPhone = async (phone, text1) => {
     const smsKey = `${process.env.SMS_KEY}`
     const text = text1
-    const debug = 1
+    const debug = 0
     const from = "Feuerloescher"
     const details = 1
     const url = `https://gateway.sms77.io/api/sms?p=${smsKey}&to=${phone}&text=${text}&debug=${debug}&from=${from}&details=${details}`
