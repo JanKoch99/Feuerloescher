@@ -82,8 +82,34 @@ const sendPhone = async (phone) => {
     } catch (error) {
         console.log(error)
     }
-
-
 }
 
-module.exports = {userConnection, triggerAlarm}
+const enableAllRaspConnections = async (req, res) => {
+
+    const raspConnections = await RaspConnection.find({deactivated: true})
+
+    for (let i=0; i <raspConnections.length; i++) {
+        const raspConnection = raspConnections[i]
+        let raspConnectionUpdated = null
+
+        if (raspConnection.mail.length > 0) {
+            raspConnectionUpdated = await RaspConnection.findOneAndUpdate({mail: raspConnection.mail}, {
+                ...{deactivated: false}
+            })
+        } else if (raspConnection.phone.length > 0) {
+            raspConnectionUpdated = await RaspConnection.findOneAndUpdate({phone: raspConnection.phone}, {
+                ...{deactivated: false}
+            })
+        }
+
+        if (!raspConnectionUpdated) {
+            throw Error('RaspConnection could not be updated')
+        }
+
+        return raspConnectionUpdated
+    }
+
+    res.status(200).json({success: 'resetted'})
+}
+
+module.exports = {userConnection, triggerAlarm, enableAllRaspConnections}

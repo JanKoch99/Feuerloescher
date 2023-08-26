@@ -1,7 +1,7 @@
 const express = require('express')
 
 //controller functions
-const {userConnection, triggerAlarm} = require('../controllers/raspController')
+const {userConnection, triggerAlarm, enableAllRaspConnections} = require('../controllers/raspController')
 
 const router = express.Router()
 
@@ -9,6 +9,8 @@ const router = express.Router()
 router.post('/userconnection', userConnection)
 
 router.get('/alarm/:id', triggerAlarm)
+
+router.get('/enable', enableAllRaspConnections)
 
 
 module.exports = router
