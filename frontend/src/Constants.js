@@ -1,6 +1,6 @@
 const production = {
-    url: 'https://gvbapi.onrender.com',
-    wsurl: 'wss://gvbapi.onrender.com'
+    url: 'https://bernhackt23-backend.web01.dalcloud.net',
+    wsurl: 'wss://bernhackt23-backend.web01.dalcloud.net'
 };
 const development = {
     url: 'http://localhost:4000',
