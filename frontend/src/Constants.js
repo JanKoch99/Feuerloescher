@@ -1,6 +1,6 @@
 const production = {
     url: 'https://gvbapi.onrender.com',
-    wsurl: 'ws://gvbapi.onrender.com'
+    wsurl: 'wss://gvbapi.onrender.com'
 };
 const development = {
     url: 'http://localhost:4000',
