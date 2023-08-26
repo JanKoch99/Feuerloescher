@@ -98,8 +98,18 @@ const enableAllRaspConnections = async (req, res) => {
 
     const raspConnections = await RaspConnection.find({deactivated: true})
 
-    for (let i=0; i <raspConnections.length; i++) {
-        const raspConnection = raspConnections[i]
+    try {
+        await enableRaspConnection(raspConnections)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+    res.status(200).json({success: 'resetted'})
+}
+
+const enableRaspConnection = async (raspConnections) => {
+    for (const raspConnection of raspConnections) {
+
         let raspConnectionUpdated = null
 
         if (raspConnection.mail.length > 0) {
@@ -115,11 +125,7 @@ const enableAllRaspConnections = async (req, res) => {
         if (!raspConnectionUpdated) {
             throw Error('RaspConnection could not be updated')
         }
-
-        return raspConnectionUpdated
     }
-
-    res.status(200).json({success: 'resetted'})
 }
 
 module.exports = {userConnection, triggerAlarm, enableAllRaspConnections}
