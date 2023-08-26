@@ -7,7 +7,10 @@ const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
 const cors = require('cors')
 
-const WebSocket = require('ws')
+const {createServer} = require("https");
+const { WebSocketServer } = require('ws');
+const {create} = require("axios");
+const {data} = require("./helper/nodeMailer");
 const app = express()
 
 app.use(cors({
@@ -20,8 +23,43 @@ app.use(express.json())
 
 const WS_PORT = process.env.PORT2;
 const HTTP_PORT = process.env.PORT;
+//websocket config
 
+const server = createServer();
+const wss = new WebSocketServer({ noServer: true });
+
+wss.on('connection', (ws, request, client) => {
+    ws.on('error', console.error);
+
+    ws.on('message', (frameData) => {
+        console.log(ws)
+        // Broadcast the received frame to all connected clients
+        wsServer.clients.forEach(client => client.send(frameData))
+
+    })
+})
+server.on('upgrade', function upgrade(request, socket, head) {
+    socket.on('error', onSocketError);
+
+    // This function is not defined on purpose. Implement it with your own logic.
+    authenticate(request, function next(err, client) {
+        if (err || !client) {
+            socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+            socket.destroy();
+            return;
+        }
+
+        socket.removeListener('error', onSocketError);
+
+        wss.handleUpgrade(request, socket, head, function done(ws) {
+            wss.emit('connection', ws, request, client);
+        });
+    });
+});
+server.listen(WS_PORT);
+console.log(`Ws listening on Port ${WS_PORT}`)
 //videoStream
+/*
 const wsServer = new WebSocket.Server({ port: WS_PORT }, () => console.log(`WS server is listening at ws://localhost:${WS_PORT}`));
 wsServer.on('connection', (ws, req) => {
     console.log('A new Websocket connection has been established.')
@@ -32,6 +70,7 @@ wsServer.on('connection', (ws, req) => {
         wsServer.clients.forEach(client => client.send(frameData))
     })
 })
+*/
 
 app.use((req, res, next) => {
     console.log(req.path, req.method)
