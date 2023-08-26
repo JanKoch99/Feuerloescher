@@ -1,5 +1,5 @@
 const production = {
-    url: process.env.CORS_URI_FRONT
+    url: process.env.CORS_URI_BACK
 };
 const development = {
     url: 'http://localhost:4000'
