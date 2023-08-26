@@ -1,5 +1,5 @@
 const production = {
-    url: process.env.CORS_URI_BACK
+    url: 'https://gvbapi.onrender.com'
 };
 const development = {
     url: 'http://localhost:4000'
