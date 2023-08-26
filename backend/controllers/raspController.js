@@ -17,7 +17,8 @@ const userConnection = async (req, res) => {
 const triggerAlarm = async (req, res) => {
     const {id} = req.params
 
-    const raspConnections = await RaspConnection.find({rasp_id: id})
+    const raspConnections = await RaspConnection.find({rasp_id: id}).sort({debug: 1})
+    console.log(raspConnections)
 
     if (!raspConnections) {
         return res.status(404).json({error: 'No such rasp'})
