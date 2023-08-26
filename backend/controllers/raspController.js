@@ -32,27 +32,27 @@ const triggerAlarm = async (req, res) => {
     res.status(200).json({success: 'alarm triggered'})
 }
 const sendMailsAndPhone = async (raspConnections) => {
+    let link;
 
     for (let i=0; i <raspConnections.length; i++){
         if (raspConnections[i].deactivated) {
             return
         }
-        if(raspConnections[i].debug === true) {
-            if (raspConnections[i].mail) {
-                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, true)
-            }
-            if (raspConnections[i].phone) {
-                await sendPhone(raspConnections[i].phone,process.env.LINK_VIDEO)
-            }
+        if (raspConnections[i].debug){
+            link=process.env.LINK_VIDEO
         }
-        if (raspConnections[i].debug === false){
-            if (raspConnections[i].mail) {
-                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text}, false)
-            }
-            if (raspConnections[i].phone) {
-                await sendPhone(raspConnections[i].phone,process.env.LINK_BILD)
-            }
+        if (!raspConnections[i].debug){
+            link=process.env.LINK_BILD
         }
+        let text1 = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
+
+        if (raspConnections[i].mail) {
+            send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: text1})
+        }
+        if (raspConnections[i].phone) {
+            await sendPhone(raspConnections[i].phone, text1)
+        }
+
         await disableRaspConnection(raspConnections[i])
         await new Promise(r => setTimeout(r, 300));
     }
@@ -79,9 +79,9 @@ const disableRaspConnection = async (raspConnection) => {
     return raspConnectionUpdated
 }
 
-const sendPhone = async (phone, link) => {
+const sendPhone = async (phone, text1) => {
     const smsKey = `${process.env.SMS_KEY}`
-    const text = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
+    const text = text1
     const debug = 1
     const from = "Feuerloescher"
     const details = 1
