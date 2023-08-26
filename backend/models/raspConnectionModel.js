@@ -27,7 +27,7 @@ raspConnectionSchema.statics.connect = async function(mail, phone, rasp_id) {
 
 
     if (!rasp_id) {
-        throw Error('Raspbery id is not given')
+        throw Error('Scannen Sie noch einmal den QR-Code oder klicken Sie noch einmal auf den Link.')
     }
 
     if (!mail && !phone) {

@@ -1,12 +1,13 @@
 import {Button} from "react-bootstrap";
+import {config} from "../Constants";
 
-const FakeTrigger = () => {
+const TestingTool = () => {
 
+    const URL = config.url
     const triggerAlarm = async () =>{
 
-        //failsafe for pitch:
         //fake trigger alarm with hardcoded id
-        const response = await fetch('/api/rasp/alarm/asdfb', {
+        const response = await fetch(`${URL}/api/rasp/alarm/asdfb`, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -20,4 +21,4 @@ const FakeTrigger = () => {
         </div>
     )
 }
-export default FakeTrigger
+export default TestingTool

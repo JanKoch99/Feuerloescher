@@ -5,8 +5,13 @@ const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
+const cors = require('cors')
 
 const app = express()
+
+app.use(cors({
+    origin: [process.env.CORS_URI_FRONT,'http://localhost:3000']
+}))
 
 // middleware
 app.use(express.json())
