@@ -53,7 +53,7 @@ const sendMailsAndPhone = async (raspConnections) => {
                 await sendPhone(raspConnections[i].phone,process.env.LINK_BILD)
             }
         }
-        disableRaspConnection(raspConnections[i])
+        await disableRaspConnection(raspConnections[i])
         await new Promise(r => setTimeout(r, 300));
     }
 }
