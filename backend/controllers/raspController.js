@@ -31,22 +31,23 @@ const triggerAlarm = async (req, res) => {
 
     res.status(200).json({success: 'alarm triggered'})
 }
-
 const sendMailsAndPhone = async (raspConnections) => {
 
-    raspConnections.forEach((raspConnection) => {
-        if (raspConnection.deactivated) {
+    for (let i=0; i <raspConnections.length; i++){
+        if (raspConnections[i].deactivated) {
             return
         }
-        if (raspConnection.mail) {
-            send({from: data.from, to: raspConnection.mail, subject: data.subject, text: data.text })
+        if (raspConnections[i].mail) {
+            send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: data.text })
         }
-        if (raspConnection.phone) {
-            sendPhone(raspConnection.phone)
+        if (raspConnections[i].phone) {
+            sendPhone(raspConnections[i].phone)
         }
-        disableRaspConnection(raspConnection)
-
-    })
+        disableRaspConnection(raspConnections[i])
+        console.log("start", new Date().getSeconds(), new Date().getMilliseconds())
+        await new Promise(r => setTimeout(r, 300));
+        console.log("end", new Date().getSeconds(), new Date().getMilliseconds())
+    }
 }
 
 const disableRaspConnection = async (raspConnection) => {
