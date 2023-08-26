@@ -5,14 +5,12 @@ const TestingTool = () => {
 
     const URL = config.url
     const triggerAlarm = async () =>{
-
         //fake trigger alarm with hardcoded id
         await fetch(`${URL}/api/rasp/alarm/z76tuhgb6z7tuhg76zu8th`, {
             headers: {
                 'Content-Type': 'application/json',
             }
         })
-
     }
 
     return (
