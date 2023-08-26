@@ -1,8 +1,22 @@
 $theme-colors: (
-        "primary": #FF8F18,
-        "secondary": #EE000B,
-        "dark": #282625
+        "primary": #FCFCFC,
+        "secondary": #A61711,
+        "danger":#FF8F18,
+        "dark": black,
+        "success": green
 );
 
+$lg:992px;
 
+.logo {
+  width: 200px !important;
+  height: auto;
+}
+
+.responsive-size {
+  width: 100%;
+  @media screen and (min-width: $lg) {
+    width: 50%;
+  }
+}
 @import "node_modules/bootstrap/scss/bootstrap";

@@ -7,9 +7,14 @@ const cors = require('cors'); // Import the cors package
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
+const cors = require('cors')
 
 const WebSocket = require('ws')
 const app = express()
+
+app.use(cors({
+    origin: [process.env.CORS_URI_FRONT,'http://localhost:3000']
+}))
 
 // middleware
 app.use(express.json())
