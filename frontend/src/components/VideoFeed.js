@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {config} from "../Constants";
+import defaultImage from "../images/defaultimage.jpg"
 
 const VideoFeed = () => {
     const socketRef = useRef();
@@ -20,15 +21,8 @@ const VideoFeed = () => {
         };
     });
 
-    const setDefaultImage = () => {
-        const defaultImage = document.getElementById('videoFrame');
-        defaultImage.src = 'defaultimage.jpg'
-    }
-
-    setDefaultImage()
-
     return (
-        <img className="w-100" id="videoFrame" alt="Video Feed" />
+        <img className="w-100" src={defaultImage} id="videoFrame" alt="Video Feed" />
     );
 };
 
