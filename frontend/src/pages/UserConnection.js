@@ -1,10 +1,5 @@
 import {useEffect, useState} from "react";
-import {useWorkoutsContext} from "../hooks/useWorkoutsContext";
-import {useAuthContext} from "../hooks/useAuthContext";
-
-import WorkoutDetails from '../components/WorkoutDetails'
-import WorkoutsForm from "../components/WorkoutForm";
-import {Button, Form} from "react-bootstrap";
+import {Button, FloatingLabel, Form} from "react-bootstrap";
 
 const UserConnection = () => {
     const [mail, setMail] = useState('')
@@ -51,23 +46,33 @@ const UserConnection = () => {
 
     return(
         <div className="userConnection">
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control value={mail} type="email" placeholder="Enter email" onChange={(e) => {setMail(e.target.value)}}/>
-                </Form.Group>
+           <div className="container">
+               <div className="row">
+                   <div className="d-none d-lg-block col-lg-3"></div>
+                   <div className="col-12 col-lg-6">
+                       <Form onSubmit={handleSubmit}>
+                           <Form.Group className="mb-3" controlId="formBasicEmail">
+                               <FloatingLabel label="Email address" controlId="mail" className="mb-3">
+                                   <Form.Control value={mail} type="email" placeholder="Enter email" onChange={(e) => {setMail(e.target.value)}}/>
+                               </FloatingLabel>
+                           </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control value={phoneNumber} type="text" placeholder="079 888 77 77" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Save
-                </Button>
-                {error && <div className="error">{error}</div> }
-                {ok && <div className="ok">{ok}</div> }
+                           <Form.Group className="mb-3" controlId="formBasicPassword">
+                               <FloatingLabel label="Phone Number" controlId="phoneNumber" className="mb-3">
+                                <Form.Control value={phoneNumber} type="text" placeholder="079 888 77 77" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
+                               </FloatingLabel>
+                           </Form.Group>
+                           <Button variant="primary" type="submit" className="btn btn-primary w-100">
+                               Save
+                           </Button>
+                           {error && <div className="error">{error}</div> }
+                           {ok && <div className="ok">{ok}</div> }
 
-            </Form>
+                       </Form>
+                   </div>
+                   <div className="d-none d-lg-block col-lg-3"></div>
+               </div>
+           </div>
         </div>
     )
 }

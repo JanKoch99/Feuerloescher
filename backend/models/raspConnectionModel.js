@@ -15,6 +15,10 @@ const raspConnectionSchema = new Schema({
     rasp_id: {
         type: String,
         required: true,
+    },
+    deactivated: {
+        type: Boolean,
+        default: false
     }
 })
 

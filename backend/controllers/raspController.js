@@ -1,11 +1,9 @@
 const RaspConnection = require('../models/raspConnectionModel')
-const mongoose = require("mongoose");
 const {send, data} = require("../helper/nodeMailer");
 const axios = require("axios");
 
 const userConnection = async (req, res) => {
     const {mail, phone, rasp_id} = req.body
-    console.log(mail)
 
     try {
         const raspConnection = await RaspConnection.connect(mail, phone, rasp_id)
@@ -18,10 +16,6 @@ const userConnection = async (req, res) => {
 
 const triggerAlarm = async (req, res) => {
     const {id} = req.params
-    /*if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({error: 'No such rasp'})
-    }*/
-    console.log(id)
 
     const raspConnections = await RaspConnection.find({rasp_id: id})
 
@@ -29,7 +23,11 @@ const triggerAlarm = async (req, res) => {
         return res.status(404).json({error: 'No such rasp'})
     }
 
-    await sendMailsAndPhone(raspConnections)
+    try {
+        await sendMailsAndPhone(raspConnections)
+    } catch (error) {
+        return res.status(404).json({error: 'RaspConnection could not be updated'})
+    }
 
     res.status(200).json({success: 'alarm triggered'})
 }
@@ -37,13 +35,31 @@ const triggerAlarm = async (req, res) => {
 const sendMailsAndPhone = async (raspConnections) => {
 
     raspConnections.forEach((raspConnection) => {
+        if (raspConnection.deactivated) {
+            return
+        }
         if (raspConnection.mail) {
             send({from: data.from, to: raspConnection.mail, subject: data.subject, text: data.text })
         }
         if (raspConnection.phone) {
             sendPhone(raspConnection.phone)
         }
+        disableRaspConnection(raspConnection)
+
     })
+}
+
+const disableRaspConnection = async (raspConnection) => {
+
+    const raspConnectionUpdated = await RaspConnection.findOneAndUpdate({$or: [{mail: raspConnection.mail}, {phone: raspConnection.phone}]}, {
+        deactivated: true
+    })
+
+    if (!raspConnectionUpdated) {
+        throw Error('RaspConnection could not be updated')
+    }
+
+    return raspConnectionUpdated
 }
 
 const sendPhone = async (phone) => {
