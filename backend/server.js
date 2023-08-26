@@ -25,8 +25,9 @@ wsServer.on('connection', (ws, req) => {
     console.log('A new Websocket connection has been established.')
 
     ws.on('message', (frameData) => {
+        console.log(ws)
         // Broadcast the received frame to all connected clients
-        ws.clients.forEach(client => client.send(frameData))
+        wsServer.clients.forEach(client => client.send(frameData))
     })
 })
 
