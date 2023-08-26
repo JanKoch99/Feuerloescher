@@ -1,35 +1,32 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
-const http = require("http");
 const {connection} = require("mongoose");
-const path = require("path");
 const cors = require('cors'); // Import the cors package
-const socketIO = require('socket.io')
 
 const workoutRoutes = require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const userConnectionRoutes = require('./routes/rasp')
 
-
+const WebSocket = require('ws')
 const app = express()
-const server = http.createServer(app)
 
 // middleware
 app.use(express.json())
 app.use(cors()); // Use the cors middleware
 
 
-const io = socketIO(server, {
-    path: '/ws', // WebSocket path
-});
+const WS_PORT = process.env.PORT2;
+const HTTP_PORT = process.env.PORT;
+
 //videoStream
-io.on('connection', (socket) => {
+const wsServer = new WebSocket.Server({ port: WS_PORT }, () => console.log(`WS server is listening at ws://localhost:${WS_PORT}`));
+wsServer.on('connection', (ws, req) => {
     console.log('A new Websocket connection has been established.')
 
-    socket.on('videoFrame', (frameData) => {
+    ws.on('message', (frameData) => {
         // Broadcast the received frame to all connected clients
-        socket.broadcast.emit('videoFrame', frameData)
+        ws.clients.forEach(client => client.send(frameData))
     })
 })
 
@@ -39,7 +36,6 @@ app.use((req, res, next) => {
 })
 
 // Serve the React frontend static files
-app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use('/api/workouts',workoutRoutes)
 app.use('/api/user',userRoutes)
 app.use('/api/rasp', userConnectionRoutes)
@@ -47,8 +43,8 @@ app.use('/api/rasp', userConnectionRoutes)
 
 mongoose.connect(process.env.MONG_URI)
     .then(() => {
-        app.listen(process.env.PORT, () => {
-            console.log('connected to db and listenning on port', process.env.PORT)
+        app.listen(HTTP_PORT, () => {
+            console.log('connected to db and listenning on port', HTTP_PORT)
         })
     })
     .catch((error) => {

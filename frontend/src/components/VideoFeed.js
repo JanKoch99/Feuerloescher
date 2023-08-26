@@ -5,15 +5,15 @@ const VideoFeed = () => {
     const socketRef = useRef();
 
     useEffect(() => {
-        socketRef.current = io.connect('ws://localhost:4000/ws');
+        socketRef.current = new WebSocket('ws://localhost:5000');
 
-        socketRef.current.on('videoFrame', (frameData) => {
+        socketRef.current.onmessage = (event) => {
             const imgElement = document.getElementById('videoFrame');
-            imgElement.src = 'data:image/jpeg;base64,' + frameData;
-        });
+            imgElement.src = 'data:image/jpeg;base64,' + event.data;
+        };
 
         return () => {
-            socketRef.current.disconnect();
+            socketRef.current.close();
         };
     }, []);
 
