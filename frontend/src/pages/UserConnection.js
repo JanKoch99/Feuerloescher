@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {Button, Card, FloatingLabel, Form} from "react-bootstrap";
+import logo from "../images/logo.png"
 
 const UserConnection = () => {
     const [mail, setMail] = useState('')
@@ -18,8 +19,9 @@ const UserConnection = () => {
         if (mail === '' && phoneNumber === ''){
             setError('At least one field must be filled')
         }
+
         else {
-            const data = {mail, phone: phoneNumber, rasp_id}
+            const data = {mail, phone: phoneNumber.replace(/^\d/, match => match === '0' ? '+41' : match), rasp_id}
 
             const response = await fetch('/api/rasp/userconnection', {
                 method: 'POST',
@@ -45,34 +47,46 @@ const UserConnection = () => {
     }
 
     return(
-        <div className="userConnection">
-           <div className="container">
-               <div className="row">
-                   <div className="d-none d-lg-block col-lg-3"></div>
-                   <div className="col-12 col-lg-6">
-                       <Form onSubmit={handleSubmit}>
-                           <Form.Group className="mb-3" controlId="formBasicEmail">
-                               <FloatingLabel label="Email address" controlId="mail" className="mb-3">
-                                   <Form.Control value={mail} type="email" placeholder="Enter email" onChange={(e) => {setMail(e.target.value)}}/>
-                               </FloatingLabel>
-                           </Form.Group>
+        <div className="d-flex justify-content-center align-items-center">
+            <Card className="w-50 mt-5 shadow-lg bg-primary">
+                <Card.Body>
+                    <div className="userConnection">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12 d-flex just">
+                                    <img src={logo} className="logo mt-2 mx-3"/>
+                                </div>
+                                <div className="col-12">
+                                    <h1 className="mt-5 mx-3 fw-bold"><span className="text-secondary">Feuer</span><span className="text-danger">löscher</span></h1>
+                                </div>
+                                <div className="col-12">
+                                    <Form onSubmit={handleSubmit}>
+                                        <Form.Group className="my-5 mx-3" controlId="formBasicEmail">
+                                            <FloatingLabel label="Email address" controlId="mail" className="mb-3">
+                                                <Form.Control value={mail} type="email" placeholder="Enter email" onChange={(e) => {setMail(e.target.value)}}/>
+                                            </FloatingLabel>
+                                        </Form.Group>
 
-                           <Form.Group className="mb-3" controlId="formBasicPassword">
-                               <FloatingLabel label="Phone Number" controlId="phoneNumber" className="mb-3">
-                                <Form.Control value={phoneNumber} type="text" placeholder="079 888 77 77" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
-                               </FloatingLabel>
-                           </Form.Group>
-                           <Button variant="primary" type="submit" className="btn btn-primary w-100">
-                               Save
-                           </Button>
-                           {error && <div className="error">{error}</div> }
-                           {ok && <div className="ok">{ok}</div> }
+                                        <Form.Group className="my-5 mx-3" controlId="formBasicPassword">
+                                            <FloatingLabel label="Phone Number" controlId="phoneNumber" className="mb-3">
+                                                <Form.Control value={phoneNumber} type="text" placeholder="079 888 77 77" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
+                                            </FloatingLabel>
+                                        </Form.Group>
+                                        <div className="d-flex my-5 mx-3">
+                                            <Button variant="primary" type="submit" className="btn btn-secondary w-100 fs-5 py-3">
+                                                Speichern
+                                            </Button>
+                                        </div>
+                                        {error && <div className="bg-danger">{error}</div> }
+                                        {ok && <div className="bg-success">{ok}</div> }
 
-                       </Form>
-                   </div>
-                   <div className="d-none d-lg-block col-lg-3"></div>
-               </div>
-           </div>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Card.Body>
+            </Card>
         </div>
     )
 }

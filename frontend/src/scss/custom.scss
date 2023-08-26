@@ -1,8 +1,13 @@
 $theme-colors: (
-        "primary": #FF8F18,
-        "secondary": #EE000B,
-        "dark": #282625
+        "primary": #FCFCFC,
+        "secondary": #A61711,
+        "danger":#FF8F18,
+        "dark": black,
+        "success": green
 );
 
-
+.logo {
+  width: 200px !important;
+  height: auto;
+}
 @import "node_modules/bootstrap/scss/bootstrap";
