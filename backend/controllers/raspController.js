@@ -52,8 +52,8 @@ const sendMailsAndPhone = async (raspConnections) => {
                 send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: text1})
             }
             if (raspConnections[i].phone.length > 0) {
-                console.log("PHONE")
-                await sendPhone(raspConnections[i].phone, text1)
+                console.log(text1)
+                await sendPhone(raspConnections[i].phone)
             }
 
             await disableRaspConnection(raspConnections[i])
@@ -86,15 +86,16 @@ const disableRaspConnection = async (raspConnection) => {
     return raspConnectionUpdated
 }
 
-const sendPhone = async (phone, text1) => {
+const sendPhone = async (phone) => {
     const smsKey = `${process.env.SMS_KEY}`
-    const text = text1
+    const text = "text1"
     const debug = 0
     const from = "Feuerloescher"
     const details = 1
     const url = `https://gateway.sms77.io/api/sms?p=${smsKey}&to=${phone}&text=${text}&debug=${debug}&from=${from}&details=${details}`
     try {
-        await axios.get(url)
+        const sms = await axios.get(url)
+        console.log(sms)
     } catch (error) {
         console.log(error)
     }
