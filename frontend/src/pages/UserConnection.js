@@ -22,6 +22,8 @@ const UserConnection = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setError(null)
+        setOK(null)
         if (mail === '' && phoneNumber === ''){
             setError('Mindestens einer der Felder muss ausgefüllt sein.')
         }

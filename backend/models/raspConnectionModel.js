@@ -35,11 +35,11 @@ raspConnectionSchema.statics.connect = async function(mail, phone, rasp_id) {
     }
 
     if (!mail.length > 0 && !phone.length > 0) {
-        throw Error('Email or phone must be filled!')
+        throw Error('Email oder Handynummer muss ausgefüllt werden!')
     }
 
     if (mail.length > 0 && !validator.isEmail(mail)) {
-        throw Error('Email is not valid')
+        throw Error('Das ist keine valide Email.')
     }
 
     let existMail
@@ -53,12 +53,10 @@ raspConnectionSchema.statics.connect = async function(mail, phone, rasp_id) {
     }
 
     if ((existMail && existMail.rasp_id === rasp_id) || (existPhone && existPhone.rasp_id === rasp_id)) {
-        throw Error('Email or Phone is already in use')
+        throw Error('E-Mail oder Handy-Nummer wird schon gebraucht.')
     }
 
-    const raspConnection = await this.create({mail: mail, phone: phone, rasp_id: rasp_id})
-
-    return raspConnection
+    return raspConnection = await this.create({mail: mail, phone: phone, rasp_id: rasp_id})
 }
 
 module.exports = mongoose.model('RaspConnection', raspConnectionSchema)
