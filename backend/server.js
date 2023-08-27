@@ -24,11 +24,12 @@ const HTTP_PORT = process.env.PORT;
 const wsServer = new WebSocket.Server({ server });
 wsServer.on('connection', (ws, req) => {
     console.log('A new Websocket connection has been established.')
-    const query = new URL(req.url, process.env.CORS_URI_FRONT).searchParams;
-    const debug = query.get('debug'); // Access the value of the debug parameter
     ws.on('message', (frameData) => {
         // Broadcast the received frame to all connected clients
         wsServer.clients.forEach(async (client) => {
+            const query = new URL(req.url, process.env.CORS_URI_FRONT).searchParams;
+            const debug = query.get('debug'); // Access the value of the debug parameter
+            console.log(debug)
             if (debug==="cTul2qVg9AViHLwjilIvUtqOZyQMDv") {
                 client.send(frameData)
             }
