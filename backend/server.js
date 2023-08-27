@@ -27,16 +27,8 @@ wsServer.on('connection', (ws, req) => {
     ws.on('message', (frameData) => {
         // Broadcast the received frame to all connected clients
         wsServer.clients.forEach(async (client) => {
-            const query = new URL(req.url, process.env.CORS_URI_FRONT).searchParams;
-            const debug = query.get('debug'); // Access the value of the debug parameter
-            console.log(debug)
-            if (debug==="cTul2qVg9AViHLwjilIvUtqOZyQMDv") {
-                client.send(frameData)
-            }
-            else{
-                //image
-                client.send(null)
-            }
+            client.send(frameData)
+
         })
     })
 })
