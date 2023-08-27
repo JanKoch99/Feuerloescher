@@ -37,4 +37,10 @@ $lg:992px;
   height: auto;
 }
 
+.modalw {
+  max-width: none !important;
+  width: 80% !important;
+}
+
+
 @import "node_modules/bootstrap/scss/bootstrap";
