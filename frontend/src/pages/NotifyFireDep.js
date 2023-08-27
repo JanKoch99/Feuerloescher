@@ -40,7 +40,7 @@ const NotifyFireDep = () => {
                         </div>
                         <div className="row mt-5 mb-3 mx-3">
                             <div className="col-12 d-flex justify-content-between">
-                                <a className="btn btn-secondary w-48 d-flex justify-content-between align-items-center flex-column"><FontAwesomeIcon icon={faFireAlt} size="4x" style={{fontSize: 53, marginTop:5}} /><p className="mt-1 p-0 m-0">Notfall melden</p></a>
+                                <a href="tel:+41795554443"className="btn btn-secondary w-48 d-flex justify-content-between align-items-center flex-column"><FontAwesomeIcon icon={faFireAlt} size="4x" style={{fontSize: 53, marginTop:5}} /><p className="mt-1 p-0 m-0">Notfall melden</p></a>
                                 <a className="btn btn-success w-48 d-flex justify-content-between align-items-center flex-column"><FontAwesomeIcon icon={faTimes} size="4x" /><p className="mt-1 p-0 m-0">Fehlalarm</p></a>
                             </div>
                         </div>
