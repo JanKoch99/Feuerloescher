@@ -61,7 +61,7 @@ const sendMailsAndPhone = async (raspConnections) => {
                 await sendPhone(raspConnections[i].phone, text1)
             }
 
-            //await disableRaspConnection(raspConnections[i])
+            await disableRaspConnection(raspConnections[i])
             await new Promise(r => setTimeout(r, 300));
         } catch (error) {
             console.log(error)
