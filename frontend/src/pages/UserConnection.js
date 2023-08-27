@@ -22,12 +22,17 @@ const UserConnection = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setError(null)
+        setOK(null)
         if (mail === '' && phoneNumber === ''){
             setError('Mindestens einer der Felder muss ausgefüllt sein.')
         }
 
         else {
-            const data = {mail, phone: phoneNumber.replace(/^\d/, match => match === '0' ? '+41' : match), rasp_id}
+            let number = phoneNumber.replace(/^(\d{2})/, (match, group1) => group1 === '00' ? '+' : match)
+            number = number.replace(/^\d/, match => match === '0' ? '+41' : match)
+            console.log(number)
+            const data = {mail, phone: number, rasp_id}
 
             const response = await fetch(`${URL}/api/rasp/userconnection`, {
                 method: 'POST',
@@ -80,7 +85,7 @@ const UserConnection = () => {
                                         </Form.Group>
 
                                         <Form.Group className="my-1 mx-3" controlId="formBasicPassword">
-                                            <FloatingLabel label="Handynummer" controlId="phoneNumber" className="mb-3">
+                                            <FloatingLabel label="Handynummer (+41)" controlId="phoneNumber" className="mb-3">
                                                 <Form.Control value={phoneNumber} type="text" placeholder="079 888 77 77" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
                                             </FloatingLabel>
                                         </Form.Group>

@@ -1,6 +1,12 @@
 const RaspConnection = require('../models/raspConnectionModel')
 const {send, data} = require("../helper/nodeMailer");
-const axios = require("axios");
+const MessenteApi = require('messente_api');
+
+const defaultClient = MessenteApi.ApiClient.instance;
+const basicAuth = defaultClient.authentications['basicAuth'];
+basicAuth.username = process.env.CONGIF_MAIL_USERNAME;
+basicAuth.password = process.env.CONGIF_MAIL_PASSWORD;
+const api = new MessenteApi.OmnimessageApi();
 
 const userConnection = async (req, res) => {
     const {mail, phone, rasp_id} = req.body
@@ -86,17 +92,40 @@ const disableRaspConnection = async (raspConnection) => {
 }
 
 const sendPhone = async (phone, text1) => {
-    const smsKey = `${process.env.SMS_KEY}`
-    const text = `${text1}`
-    const debug = 0
-    const from = "Feuerloescher"
-    const details = 1
-    const url = `https://gateway.sms77.io/api/sms?p=${smsKey}&to=${phone}&text=${text}&debug=${debug}&from=${from}&details=${details}`
+    //SMS
+    const sms = MessenteApi.SMS.constructFromObject({
+        sender: 'VeriSphere',
+        text: text1,
+    });
+
+    const omnimessage = MessenteApi.Omnimessage.constructFromObject({
+        messages: [sms],
+        to: phone,
+    });
+
+
+    api.sendOmnimessage(omnimessage, (error, data) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ', data);
+        }
+    })
+
+    //WhatsApp --> Only used as backup
+    /*const payload = {
+        chatId: phone.slice(1)+'@c.us',
+        message: text1
+    };
+    const headers = {
+        'Content-Type': 'application/json'
+    };
     try {
-        const sms = await axios.get(url)
+        const response = await axios.post(url, payload, { headers });
+        console.log(response)
     } catch (error) {
         console.log(error)
-    }
+    }*/
 }
 
 const enableAllRaspConnections = async (req, res) => {
