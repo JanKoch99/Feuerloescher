@@ -25,7 +25,7 @@ const VideoFeed = () => {
     });
 
     return (
-        <img className="w-100" src={defaultImage} id="videoFrame" alt="Video Feed" />
+        <img className="w-100 rounded-1" src={defaultImage} id="videoFrame" alt="Video Feed" />
     );
 };
 
