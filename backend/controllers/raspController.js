@@ -35,28 +35,33 @@ const triggerAlarm = async (req, res) => {
 const sendMailsAndPhone = async (raspConnections) => {
 
     for (let i=0; i <raspConnections.length; i++){
-        let link;
+        try {
+            let link;
 
-        if (raspConnections[i].deactivated) {
-            return
-        }
-        if (raspConnections[i].debug){
-            link=process.env.LINK_VIDEO
-        } else {
-            link=process.env.LINK_BILD
-        }
-        let text1 = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
+            if (raspConnections[i].deactivated) {
+                return
+            }
+            if (raspConnections[i].debug){
+                link=process.env.LINK_VIDEO
+            } else {
+                link=process.env.LINK_BILD
+            }
+            let text1 = "Lieber Benutzer,\nIn einem deiner Zimmer wurde Rauch oder Feuer erkannt.\nFür weitere Informationen folgen Sie diesem Link: " + link + "\nPanische Grüsse\nDie FeuerLöscher"
 
-        if (raspConnections[i].mail.length > 0) {
-            send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: text1})
-        }
-        if (raspConnections[i].phone.length > 0) {
-            console.log("PHONE")
-            await sendPhone(raspConnections[i].phone, text1)
+            if (raspConnections[i].mail.length > 0) {
+                send({from: data.from, to: raspConnections[i].mail, subject: data.subject, text: text1})
+            }
+            if (raspConnections[i].phone.length > 0) {
+                console.log("PHONE")
+                await sendPhone(raspConnections[i].phone, text1)
+            }
+
+            await disableRaspConnection(raspConnections[i])
+            await new Promise(r => setTimeout(r, 300));
+        } catch (error) {
+            console.log(error)
         }
 
-        await disableRaspConnection(raspConnections[i])
-        await new Promise(r => setTimeout(r, 300));
     }
 }
 
